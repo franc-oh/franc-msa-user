@@ -8,9 +8,11 @@
 - Spring Boot 3.2.1
 - Spring Cloud Eureka Client 4.1.3
 - Spring Date JPA
+- Spring Security
 - Lombok
 - H2 DB
 - Gradle 8.10
+- MapStruct
 
 <br/>
 
@@ -22,7 +24,9 @@
 
 ### 엔드포인트
 
-#### 회원가입 - (POST) /franc/api/users
-#### 헬스체크 - (GET) /franc/api/users/health_check
+#### 회원가입 - (POST)  /franc/api/users
+#### 회원조회 - (GET)   /franc/api/users/{userId}
+#### 회원전체조회 - (GET)   /franc/api/users
+#### 헬스체크 - (GET)   /franc/api/users/health_check
 
 

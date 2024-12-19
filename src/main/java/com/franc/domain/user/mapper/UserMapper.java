@@ -5,7 +5,6 @@ import com.franc.domain.user.dto.UserGetAllDto;
 import com.franc.domain.user.dto.UserGetDto;
 import com.franc.domain.user.dto.UserSaveDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
