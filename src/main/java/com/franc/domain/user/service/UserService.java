@@ -7,6 +7,7 @@ import com.franc.global.util.FrancUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -26,6 +27,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -42,6 +45,11 @@ public class UserService {
 
         // userId 채번 후 회원가입
         user.setUserId(UUID.randomUUID().toString());
+
+        // 비밀번호 암호화
+        String encodePwd = passwordEncoder.encode(user.getPwd());
+        user.setPwd(encodePwd);
+
         return userRepository.save(user);
     }
 }
