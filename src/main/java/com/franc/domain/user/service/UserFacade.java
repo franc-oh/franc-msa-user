@@ -1,11 +1,20 @@
 package com.franc.domain.user.service;
 
 import com.franc.domain.user.domain.User;
+import com.franc.domain.user.dto.UserGetAllDto;
+import com.franc.domain.user.dto.UserGetDto;
 import com.franc.domain.user.dto.UserSaveDto;
+import com.franc.domain.user.mapper.UserMapper;
+import com.franc.global.error.ErrorCode;
+import com.franc.global.util.FrancUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -22,6 +31,8 @@ public class UserFacade {
 
     private final UserService userService;
 
+    private final UserMapper userMapper;
+
 
     /**
      * 회원가입
@@ -30,10 +41,35 @@ public class UserFacade {
      * @throws Exception
      */
     public UserSaveDto.Response saveUser(UserSaveDto.Request request) throws Exception {
+        User user = userService.saveUser(userMapper.toEntity(request));
+        return userMapper.toSaveDto(user);
+    }
 
-        User user = userService.saveUser(UserSaveDto.Request.toEntity(request));
 
-        return UserSaveDto.Response.fromEntity(user);
+    /**
+     * 회원 전체조회
+     * @return
+     * @throws Exception
+     */
+    public UserGetAllDto.Response getAllUser() throws Exception {
+        List<User> users = userService.findAllUser();
+
+        if(Objects.isNull(users) || users.isEmpty()) {
+            return new UserGetAllDto.Response(new ArrayList<>());
+        }
+
+        return new UserGetAllDto.Response(userMapper.toGetAllDto(users));
+    }
+
+    /**
+     * 회원조회 - userId
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    public UserGetDto.Response getUser(String userId) throws Exception {
+        User user = FrancUtil.isNullThrowBizException(userService.findUserByUserId(userId), ErrorCode.USER_NOT_EXISTS);
+        return userMapper.toGetDto(user);
     }
 
 

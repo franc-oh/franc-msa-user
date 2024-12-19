@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,9 +34,12 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-
     public User findUserByUserId(String userId) {
         return userRepository.findByUserId(userId);
+    }
+
+    public List<User> findAllUser() {
+        return userRepository.findAll();
     }
 
 

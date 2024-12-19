@@ -1,11 +1,8 @@
 package com.franc.domain.user.dto;
 
-import com.franc.domain.user.domain.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-
-import java.util.Objects;
 
 /**
  * 회원가입 DTO
@@ -32,14 +29,6 @@ public record UserSaveDto() {
             String pwd
     ) {
 
-        // DTO -> VO
-        public static User toEntity(UserSaveDto.Request dto) {
-            return User.builder()
-                    .email(dto.email())
-                    .name(dto.name())
-                    .pwd(dto.pwd)
-                    .build();
-        }
     }
 
 
@@ -55,15 +44,5 @@ public record UserSaveDto() {
             String userId
     ) {
 
-        // VO -> DTO
-        public static UserSaveDto.Response fromEntity(User user) {
-            if(Objects.isNull(user) || Objects.isNull(user.getEmail())) return null;
-
-            return new UserSaveDto.Response(
-                    user.getEmail(),
-                    user.getName(),
-                    user.getUserId()
-            );
-        }
     }
 }
