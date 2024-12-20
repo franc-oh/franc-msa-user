@@ -1,9 +1,8 @@
-package com.franc.global.config.database;
+package com.franc.global.config.jpa;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -39,6 +38,7 @@ public class JpaConfig {
         jpaProperties.setProperty("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
         jpaProperties.setProperty("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
         jpaProperties.put("hibernate.format_sql", env.getRequiredProperty("spring.jpa.properties.hibernate.format_sql"));
+        jpaProperties.setProperty("hibernate.physical_naming_strategy", "com.franc.global.config.jpa.CustomPhysicalNamingStrategy");
         factoryBean.setJpaProperties(jpaProperties);
 
         return factoryBean;
